@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_hive/components/TodoTile.dart';
+import 'package:todo_hive/components/add_task_dialog.dart';
+import 'package:todo_hive/components/todo_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,6 +10,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late TextEditingController _controller;
+
   List todoList = [
     ['Practice flutter', false],
     ['Workout', true],
@@ -18,6 +21,12 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       todoList[index][1] = !todoList[index][1];
     });
+  }
+
+  void createNewTask() {
+     showDialog(context: context, builder: (context) {
+       return AddTaskDialogBox(controller: _controller,);
+     },);
   }
 
   @override
@@ -40,6 +49,10 @@ class _HomePageState extends State<HomePage> {
             );
           }),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: createNewTask,
+        child: const Icon(Icons.add),
       ),
     );
   }
