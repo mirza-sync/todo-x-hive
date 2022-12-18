@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_hive/components/add_task_dialog.dart';
+import 'package:todo_hive/components/add_task_dialog_box.dart';
 import 'package:todo_hive/components/todo_tile.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late TextEditingController _controller;
+  final _controller = TextEditingController();
 
   List todoList = [
     ['Practice flutter', false],
@@ -23,9 +23,17 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void onAddNewTask() {
+    setState(() {
+      todoList.add([_controller.text, false]);
+    });
+    _controller.clear();
+    Navigator.of(context).pop();
+  }
+
   void createNewTask() {
      showDialog(context: context, builder: (context) {
-       return AddTaskDialogBox(controller: _controller,);
+       return AddTaskDialogBox(controller: _controller, addNewTask: onAddNewTask,);
      },);
   }
 
