@@ -6,6 +6,8 @@ import 'package:todo_hive/pages/home_page.dart';
 
 void main() {
   Hive.init(Directory.current.path);
+  var box = Hive.openBox('todoBox');
+  
   runApp(const MyApp());
 }
 
