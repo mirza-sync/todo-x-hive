@@ -14,17 +14,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _controller = TextEditingController();
   final todoBox = Hive.box('todoBox');
-  TodoDatabase db = TodoDatabase();
+  TodoDatabase todoDb = TodoDatabase();
 
   void onCheckBoxChanged(bool? value, int index) {
     setState(() {
-      db.todoList[index][1] = !db.todoList[index][1];
+      todoDb.todoList[index][1] = !todoDb.todoList[index][1];
     });
   }
 
   void onAddNewTask() {
     setState(() {
-      db.todoList.add([_controller.text, false]);
+      todoDb.todoList.add([_controller.text, false]);
     });
     _controller.clear();
     Navigator.of(context).pop();
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
 
   void deleteTask(int index) {
     setState(() {
-      db.todoList.removeAt(index);
+      todoDb.todoList.removeAt(index);
     });
   }
 
@@ -53,11 +53,11 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.builder(
-          itemCount: db.todoList.length,
+          itemCount: todoDb.todoList.length,
           itemBuilder: ((context, index) {
             return TodoTile(
-              taskName: db.todoList[index][0],
-              taskCompleted: db.todoList[index][1],
+              taskName: todoDb.todoList[index][0],
+              taskCompleted: todoDb.todoList[index][1],
               onChanged: (value) => onCheckBoxChanged(value, index),
               deleteTask: (context) => deleteTask(index),
             );
