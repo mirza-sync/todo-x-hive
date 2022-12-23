@@ -16,10 +16,17 @@ class _HomePageState extends State<HomePage> {
   final todoBox = Hive.box('todoBox');
   TodoDatabase todoDb = TodoDatabase();
 
+  @override
+  void initState() {
+    super.initState();
+    todoDb.loadData();
+  }
+
   void onCheckBoxChanged(bool? value, int index) {
     setState(() {
       todoDb.todoList[index][1] = !todoDb.todoList[index][1];
     });
+    todoDb.updateData();
   }
 
   void onAddNewTask() {
@@ -28,18 +35,26 @@ class _HomePageState extends State<HomePage> {
     });
     _controller.clear();
     Navigator.of(context).pop();
+    todoDb.updateData();
   }
 
   void createNewTask() {
-     showDialog(context: context, builder: (context) {
-       return AddTaskDialogBox(controller: _controller, addNewTask: onAddNewTask,);
-     },);
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AddTaskDialogBox(
+          controller: _controller,
+          addNewTask: onAddNewTask,
+        );
+      },
+    );
   }
 
   void deleteTask(int index) {
     setState(() {
       todoDb.todoList.removeAt(index);
     });
+    todoDb.updateData();
   }
 
   @override
