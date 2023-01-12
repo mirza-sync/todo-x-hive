@@ -11,4 +11,13 @@ class TodoDatabase {
       ['Practice Flutter', false],
     ];
   }
+
+  void loadData() {
+    todoList = todoBox.get("TODOLIST");
+  }
+
+  void updateData() {
+    todoBox.put("TODOLIST", todoList);
+    print('Updated!');
+  }
 }

@@ -1,12 +1,12 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_hive/pages/home_page.dart';
 
-void main() {
-  Hive.init(Directory.current.path);
-  var box = Hive.openBox('todoBox');
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox('todoBox');
   
   runApp(const MyApp());
 }
