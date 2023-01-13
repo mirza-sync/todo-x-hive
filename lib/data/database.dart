@@ -18,6 +18,5 @@ class TodoDatabase {
 
   void updateData() {
     todoBox.put("TODOLIST", todoList);
-    print('Updated!');
   }
 }
